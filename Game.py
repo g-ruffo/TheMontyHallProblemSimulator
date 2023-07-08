@@ -1,3 +1,5 @@
+import json
+import os
 from typing import List
 from Doors import Doors
 
@@ -8,6 +10,8 @@ class Game:
         self.total_games = 0
         self.total_wins = 0
         self.win_average = 0
+        self.filename = None
+        self.save_dir = "saved_games"  # directory to save games
 
     def setup_game(self):
         number_of_plays = 0
@@ -135,6 +139,62 @@ class Game:
         self.total_games = 0
         self.total_wins = 0
         self.win_average = 0
+
+    def save_to_file(self):
+        if self.filename is None:
+            while True:
+                filename = input("Please enter a filename to save the game results: ").strip()
+                if filename:
+                    self.filename = filename
+                    break
+                else:
+                    print("Filename cannot be blank. Please try again.")
+
+        # Make sure the directory exists. If not, create it.
+        os.makedirs(self.save_dir, exist_ok=True)
+
+        # Create full path for the file
+        full_path = os.path.join(self.save_dir, self.filename)
+
+        # Convert game state to a list of dictionaries
+        game_data = [vars(game) for game in self.completed_games]
+
+        try:
+            # Write the data to a file
+            with open(full_path, 'w') as file:
+                json.dump(game_data, file)
+            print("Game saved successfully in {}".format(full_path))
+        except IOError as e:
+            print("Unable to save game: {}".format(e))
+        except Exception as e:
+            print("Unexpected error occurred while saving game: {}".format(e))
+
+    @classmethod
+    def load_from_file(cls, filename):
+        # Create a new game instance
+        game = cls()
+
+        try:
+            # Load the data from a file
+            with open(filename, 'r') as file:
+                game_data = json.load(file)
+
+            # Convert dictionaries back to Doors instances and store them in the game
+            for game_dict in game_data:
+                door = Doors()
+                door.__dict__.update(game_dict)
+                game.add_result_to_list(door)
+
+            # Calculate win average based on loaded games
+            game.calculate_win_average()
+        except IOError as e:
+            print("Unable to load game: {}".format(str(e)))
+        except ValueError as e:
+            print("Invalid game data: {}".format(str(e)))
+        except Exception as e:
+            print("Unexpected error occurred while loading game: {}".format(str(e)))
+
+        return game
 
     def print_line_break(self):
         print("******************")
