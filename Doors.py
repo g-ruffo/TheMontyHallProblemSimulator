@@ -13,6 +13,7 @@ class Doors:
         self.system_game = False
         self.system_guess = None
         self.system_should_switch = None
+
     def start_manual_game(self):
         self.show_doors_closed(True)
 
@@ -102,6 +103,7 @@ class Doors:
             print("Congratulations, Door number {} was the correct answer. \nEnjoy your new car!".format(winning_string))
         else:
             print("Ooooo I am sorry, Door number {} was the correct answer. \nHere's a Goat!".format(winning_string))
+        self.print_line_break()
 
     def open_hint_door(self):
         self.remaining_doors.remove(self.user_guess)
@@ -115,6 +117,10 @@ class Doors:
         for door in self.remaining_doors:
             if door != winner:
                 return door
+
+    def print_line_break(self):
+        print("******************")
+
 
     DOORNUMBERS = ["1️⃣", "2️⃣", "3️⃣"]
     CLOSEDDOOR = """
