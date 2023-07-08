@@ -130,5 +130,11 @@ class Game:
         print("You Played {} Games and Won {}".format(self.total_games, self.total_wins))
         print("Your Win Average Is: %{}".format(self.win_average * 100))
 
+    def clear_game(self):
+        self.completed_games: List[Doors] = []
+        self.total_games = 0
+        self.total_wins = 0
+        self.win_average = 0
+
     def print_line_break(self):
         print("******************")
