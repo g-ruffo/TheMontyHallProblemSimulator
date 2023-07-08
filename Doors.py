@@ -12,10 +12,10 @@ class Doors:
         self.did_win = None
         self.system_game = False
         self.system_should_switch = None
-    def start_user_game(self):
+    def start_manual_game(self):
         self.show_doors_closed(True)
 
-    def start_system_game(self, should_switch):
+    def start_automatic_game(self, should_switch):
         self.system_game = True
         self.system_should_switch = should_switch
         self.show_doors_closed(True)
