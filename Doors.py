@@ -5,21 +5,16 @@ class Doors:
     def __init__(self):
         # Randomly select a winning door
         self.winning_door_number = random.randint(0, 2)
-
         # Create a list of closed doors
         self.closed_doors = self.create_closed_doors()
-
         # Create a list of open doors
         self.open_doors = self.create_open_doors()
-
         # Create a list of remaining door numbers
         self.remaining_doors = list(range(0, 3))
-
         # Initialize variables for user's guess, whether the user switched doors, and if the user won
         self.user_guess = None
         self.user_switched = None
         self.did_win = None
-
         # Initialize variables for automatic game
         self.system_game = False
         self.system_guess = None

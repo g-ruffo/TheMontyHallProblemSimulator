@@ -4,16 +4,25 @@ from typing import List
 from Doors import Doors
 
 class Game:
-
+    # Initialize the Game class with relevant instance variables
     def __init__(self):
+        # A list to keep track of completed games, each game is an instance of the Doors class
         self.completed_games: List[Doors] = []
+        # Integer variables to store the total number of games and wins
         self.total_games = 0
         self.total_wins = 0
+        # Variable to store the win average
         self.win_average = 0
+        # Variable to store the filename of the saved game
         self.filename = None
+        # Directory to save games
         self.save_dir = "saved_games"  # directory to save games
 
+    # Function to set up the game
     def setup_game(self):
+        # This function prompts the user for the number of games they would like to play and whether they would like to play manually or automatically
+        # The function will continue to prompt until valid input is received
+        # On receipt of valid input, the function will start the relevant game type
         number_of_plays = 0
         while number_of_plays == 0:
             self.print_line_break()
@@ -50,6 +59,8 @@ class Game:
                 continue
 
     def setup_automatic_game(self, number_of_plays):
+        # This function prompts the user for their choice to switch doors and guess number in the automatic game
+        # On receipt of valid input, the function will start the automatic game with the provided parameters
         should_switch = None
         while should_switch is None:
             self.print_line_break()
@@ -89,6 +100,9 @@ class Game:
                     continue
 
     def begin_automatic_games(self, number_of_plays, should_switch, guess_number):
+        # This function runs the automatic game the specified number of times
+        # Each game result is appended to the completed_games list
+        # After all games are completed, the function calculates and prints the win average
         for game in range(number_of_plays):
             self.print_line_break()
             print("Starting Game:{}".format(game + 1))
@@ -102,6 +116,9 @@ class Game:
         self.calculate_win_average()
 
     def begin_manual_game(self, number_of_plays):
+        # This function runs the manual game the specified number of times
+        # Each game result is appended to the completed_games list
+        # After all games are completed, the function calculates and prints the win average
         for game in range(number_of_plays):
             self.print_line_break()
             print("Starting Game:{}".format(game + 1))
@@ -116,9 +133,11 @@ class Game:
         self.calculate_win_average()
 
     def add_result_to_list(self, finished_game):
+        # This function adds a completed game to the completed_games list
         self.completed_games.append(finished_game)
 
     def calculate_win_average(self):
+        # This function calculates the win average from completed games and prints the total number of games, number of wins and win average
         self.total_games = len(self.completed_games)
         if self.total_games == 0:
             print("You do not have any completed games.")
@@ -135,12 +154,17 @@ class Game:
         print("Your Win Average Is: %{}".format(self.win_average * 100))
 
     def clear_game(self):
+        # This function resets the game state, clearing the completed_games list and resetting the total_games, total_wins and win_average variables
         self.completed_games: List[Doors] = []
         self.total_games = 0
         self.total_wins = 0
         self.win_average = 0
 
     def save_to_file(self):
+        # This function saves the completed games to a file
+        # If the filename is not already set, it prompts the user for a filename
+        # The function ensures the save directory exists, creates it if not
+        # The function then converts the completed games to a list of dictionaries and writes this to a file in the save directory
         if self.filename is None:
             while True:
                 filename = input("Please enter a filename to save the game results: ").strip()
@@ -171,6 +195,10 @@ class Game:
 
     @classmethod
     def load_from_file(cls, filename):
+        # This class method loads a game from a file and returns a Game instance
+        # The method reads a list of dictionaries from the file and converts this back into a list of Doors instances, adding each one to the game's completed_games list
+        # After loading all the games, the function calculates and prints the win average
+
         # Create a new game instance
         game = cls()
 
@@ -196,5 +224,6 @@ class Game:
 
         return game
 
+    # This function prints a line break
     def print_line_break(self):
         print("******************")
