@@ -11,13 +11,15 @@ class Doors:
         self.user_switched = None
         self.did_win = None
         self.system_game = False
+        self.system_guess = None
         self.system_should_switch = None
     def start_manual_game(self):
         self.show_doors_closed(True)
 
-    def start_automatic_game(self, should_switch):
+    def start_automatic_game(self, should_switch, system_guess):
         self.system_game = True
         self.system_should_switch = should_switch
+        self.system_guess = system_guess
         self.show_doors_closed(True)
 
     def create_closed_doors(self):
@@ -52,7 +54,7 @@ class Doors:
         while self.user_guess is None:
             print("Guess Which Door the Prize is Behind! \nEnter the door number:")
             if self.system_game:
-                value = random.randint(0, 2)
+                value = random.randint(0, 2) if self.system_guess is None else self.system_guess
             else:
                 value = input()
             try:
