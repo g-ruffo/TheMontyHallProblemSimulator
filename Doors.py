@@ -104,6 +104,8 @@ class Doors:
         else:
             print("Ooooo I am sorry, Door number {} was the correct answer. \nHere's a Goat!".format(winning_string))
         self.print_line_break()
+        self.closed_doors = None
+        self.open_doors = None
 
     def open_hint_door(self):
         self.remaining_doors.remove(self.user_guess)
