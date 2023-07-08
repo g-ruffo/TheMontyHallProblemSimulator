@@ -6,4 +6,4 @@ from Doors import Doors
 
 
 door = Doors()
-print(door.showStartingDoors())
+
