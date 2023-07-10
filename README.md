@@ -43,5 +43,5 @@ Once the program is running, follow the prompts in the command line to play the 
 ## Developed By
 Grayson Ruffo
 
-      Copyright 2022 Grayson Ruffo
+      Copyright 2023 Grayson Ruffo
 
